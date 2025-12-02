@@ -209,44 +209,44 @@ class Home {
         let infoStarting = document.querySelector(".info-starting-game-text")
         let progressBar = document.querySelector('.progress-bar')
 
-        let opt = {
-            url: options.url,
-            authenticator: authenticator,
-            timeout: 10000,
-            path: `${await appdata()}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`,
-            instance: options.name,
-            version: options.loadder.minecraft_version,
-            detached: configClient.launcher_config.closeLauncher == "close-all" ? false : true,
-            downloadFileMultiple: configClient.launcher_config.download_multi,
-            intelEnabledMac: configClient.launcher_config.intelEnabledMac,
+let opt = {
+    url: options.url,
+    authenticator: authenticator,
+    timeout: 10000,
+    path: `${await appdata()}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`,
+    instance: options.name,
+    version: options.loader.minecraft_version,
+    detached: configClient.launcher_config.closeLauncher == "close-all" ? false : true,
+    downloadFileMultiple: configClient.launcher_config.download_multi,
+    intelEnabledMac: configClient.launcher_config.intelEnabledMac,
 
-            loader: {
-                type: options.loadder.loadder_type,
-                build: options.loadder.loadder_version,
-                enable: options.loadder.loadder_type == 'none' ? false : true
-            },
+    loader: {
+        type: options.loader.loader_type,
+        build: options.loader.loader_version,
+        enable: options.loader.loader_type == 'none' ? false : true
+    },
 
-            verify: options.verify,
+    verify: options.verify,
 
-            ignored: [...options.ignored],
+    ignored: Array.isArray(options.ignored) ? [...options.ignored] : [],
 
-            java: {
-                path: configClient.java_config.java_path,
-            },
+    java: {
+        path: configClient.java_config.java_path,
+    },
 
-            JVM_ARGS:  options.jvm_args ? options.jvm_args : [],
-            GAME_ARGS: options.game_args ? options.game_args : [],
+    JVM_ARGS: options.jvm_args ? options.jvm_args : [],
+    GAME_ARGS: options.game_args ? options.game_args : [],
 
-            screen: {
-                width: configClient.game_config.screen_size.width,
-                height: configClient.game_config.screen_size.height
-            },
+    screen: {
+        width: configClient.game_config.screen_size.width,
+        height: configClient.game_config.screen_size.height
+    },
 
-            memory: {
-                min: `${configClient.java_config.java_memory.min * 1024}M`,
-                max: `${configClient.java_config.java_memory.max * 1024}M`
-            }
-        }
+    memory: {
+        min: `${configClient.java_config.java_memory.min * 1024}M`,
+        max: `${configClient.java_config.java_memory.max * 1024}M`
+    }
+}
 
         launch.Launch(opt);
 
@@ -261,14 +261,14 @@ class Home {
         });
 
         launch.on('progress', (progress, size) => {
-            infoStarting.innerHTML = `Téléchargement ${((progress / size) * 100).toFixed(0)}%`
+            infoStarting.innerHTML = `Descargando archivos ${((progress / size) * 100).toFixed(0)}%`
             ipcRenderer.send('main-window-progress', { progress, size })
             progressBar.value = progress;
             progressBar.max = size;
         });
 
         launch.on('check', (progress, size) => {
-            infoStarting.innerHTML = `Vérification ${((progress / size) * 100).toFixed(0)}%`
+            infoStarting.innerHTML = `Verificando archivos ${((progress / size) * 100).toFixed(0)}%`
             ipcRenderer.send('main-window-progress', { progress, size })
             progressBar.value = progress;
             progressBar.max = size;
@@ -288,7 +288,7 @@ class Home {
         launch.on('patch', patch => {
             console.log(patch);
             ipcRenderer.send('main-window-progress-load')
-            infoStarting.innerHTML = `Patch en cours...`
+            infoStarting.innerHTML = `Aplicando parche...`
         });
 
         launch.on('data', (e) => {
@@ -298,7 +298,7 @@ class Home {
             };
             new logger('Minecraft', '#36b030');
             ipcRenderer.send('main-window-progress-load')
-            infoStarting.innerHTML = `Demarrage en cours...`
+            infoStarting.innerHTML = `Iniciando...`
             console.log(e);
         })
 
@@ -309,7 +309,7 @@ class Home {
             ipcRenderer.send('main-window-progress-reset')
             infoStartingBOX.style.display = "none"
             playInstanceBTN.style.display = "flex"
-            infoStarting.innerHTML = `Vérification`
+            infoStarting.innerHTML = `Verificando Archivos...`
             new logger(pkg.name, '#7289da');
             console.log('Close');
         });

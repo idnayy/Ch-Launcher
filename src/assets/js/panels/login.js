@@ -61,7 +61,7 @@ class Login {
     }
 
     async getCrack() {
-        console.log('Initializing offline login...');
+        console.log('Iniciando inicio de sesion offline...');
         let popupLogin = new popup();
         let loginOffline = document.querySelector('.login-offline');
 
@@ -72,8 +72,8 @@ class Login {
         connectOffline.addEventListener('click', async () => {
             if (emailOffline.value.length < 3) {
                 popupLogin.openPopup({
-                    title: 'Erreur',
-                    content: 'Votre pseudo doit faire au moins 3 caractères.',
+                    title: 'Error',
+                    content: 'El nombre debe de tener almenos 3 caracteres.',
                     options: true
                 });
                 return;
@@ -81,8 +81,8 @@ class Login {
 
             if (emailOffline.value.match(/ /g)) {
                 popupLogin.openPopup({
-                    title: 'Erreur',
-                    content: 'Votre pseudo ne doit pas contenir d\'espaces.',
+                    title: 'Error',
+                    content: 'El nombre no puede tener espacios.',
                     options: true
                 });
                 return;
@@ -92,7 +92,7 @@ class Login {
 
             if (MojangConnect.error) {
                 popupLogin.openPopup({
-                    title: 'Erreur',
+                    title: 'Error',
                     content: MojangConnect.message,
                     options: true
                 });

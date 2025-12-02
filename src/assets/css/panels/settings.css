@@ -411,3 +411,15 @@
 .active-close {
     border: 4px solid var(--element-color);
 }
+#save {
+    background: #ff4c4c;        /* rojo principal */
+    color: var(--background);   /* texto en contraste */
+    border: 2px solid #ff4c4c;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#save:hover {
+    background: #ff2c2c;        /* rojo más intenso al pasar el mouse */
+    transform: scale(1.05);     /* efecto de zoom */
+    box-shadow: 0 0 12px rgba(255, 76, 76, 0.5); /* brillo rojo */
+}
