@@ -41,20 +41,22 @@
     "type": "git",
     "url": "git+https://github.com/idnayy/Ch-Launcher.git"
   },
-"build": {
-  "appId": "com.ch.launcher",
-  "productName": "CH Launcher",
-  "icon": "src/assets/images/icon.ico",
-  "files": [
-    "src/**/*",
-    "node_modules/**/*"
-  ],
-  "directories": {
-    "buildResources": "src/assets/images"
-  },
-  "win": {
-    "target": "nsis"
-  },
-  "linux": {
-    "target": "AppImage"
+  "build": {
+    "appId": "com.ch.launcher",
+    "productName": "CH Launcher",
+    "icon": "src/assets/images/icon.ico",
+    "files": [
+      "src/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "src/assets/images"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
+}
