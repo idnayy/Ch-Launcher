@@ -16,7 +16,6 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV
           echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
       - name: Create Release
