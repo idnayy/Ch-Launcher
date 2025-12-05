@@ -19,9 +19,9 @@ setTimeout(() => {
   setPresence("Jugando Chamba Games");
 }, 5000);
 
-process.on("exit", () => {
+if (typeof rpcProcess !== "undefined" && rpcProcess) {
   rpcProcess.kill();
-});
+}
 
 const { preductname } = require('./package.json');
 
