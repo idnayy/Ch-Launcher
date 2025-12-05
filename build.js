@@ -5,7 +5,6 @@ const JavaScriptObfuscator = require('javascript-obfuscator');
 const nodeFetch = require('node-fetch')
 const png2icons = require('png2icons');
 const Jimp = require('jimp');
-const nodeFetch = require("node-fetch");
 const { spawn } = require("child_process");
 
 // Ejemplo de uso dinámico:
