@@ -13,7 +13,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get version
-        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV
+        run: |
+          echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
       
       - name: Create Release
         id: create_release
@@ -21,10 +22,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.version }}
-          release_name: release ${{ env.version }}
+          tag_name: ${{ env.VERSION }}
+          release_name: release ${{ env.VERSION }}
           draft: false
-          prerelease: ${{ contains(env.version, 'beta') || contains(env.version, 'alpha') }}
+          prerelease: ${{ contains(env.VERSION, 'beta') || contains(env.VERSION, 'alpha') }}
 
   build-launcher:
     needs: create-release
