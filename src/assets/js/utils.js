@@ -83,33 +83,40 @@ async function headplayer(skinBase64) {
 }
 
 async function setStatus(opt) {
-    let nameServerElement = document.querySelector('.server-status-name')
-    let statusServerElement = document.querySelector('.server-status-text')
-    let playersOnline = document.querySelector('.status-player-count .player-count')
+    const nameServerElement = document.querySelector('.server-status-name');
+    const statusServerElement = document.querySelector('.server-status-text');
+    const statusPlayerContainer = document.querySelector('.status-player-count');
+    const playersOnline = document.querySelector('.status-player-count .player-count');
 
-    if (!opt) {
-        statusServerElement.classList.add('red')
-        statusServerElement.innerHTML = `Ferme - 0 ms`
-        document.querySelector('.status-player-count').classList.add('red')
-        playersOnline.innerHTML = '0'
-        return
+    if (!statusServerElement || !statusPlayerContainer || !playersOnline || !nameServerElement) {
+        console.warn("[ch-launcher] Elementos de estado del servidor no encontrados en el DOM");
+        return;
     }
 
-    let { ip, port, nameServer } = opt
-    nameServerElement.innerHTML = nameServer
-    let status = new Status(ip, port);
-    let statusServer = await status.getStatus().then(res => res).catch(err => err);
+    if (!opt) {
+        statusServerElement.classList.add('red');
+        statusServerElement.innerHTML = `Ferme - 0 ms`;
+        statusPlayerContainer.classList.add('red');
+        playersOnline.innerHTML = '0';
+        return;
+    }
+
+    const { ip, port, nameServer } = opt;
+    nameServerElement.innerHTML = nameServer;
+
+    const status = new Status(ip, port);
+    const statusServer = await status.getStatus().then(res => res).catch(err => err);
 
     if (!statusServer.error) {
-        statusServerElement.classList.remove('red')
-        document.querySelector('.status-player-count').classList.remove('red')
-        statusServerElement.innerHTML = `En ligne - ${statusServer.ms} ms`
-        playersOnline.innerHTML = statusServer.playersConnect
+        statusServerElement.classList.remove('red');
+        statusPlayerContainer.classList.remove('red');
+        statusServerElement.innerHTML = `En ligne - ${statusServer.ms} ms`;
+        playersOnline.innerHTML = statusServer.playersConnect;
     } else {
-        statusServerElement.classList.add('red')
-        statusServerElement.innerHTML = `Ferme - 0 ms`
-        document.querySelector('.status-player-count').classList.add('red')
-        playersOnline.innerHTML = '0'
+        statusServerElement.classList.add('red');
+        statusServerElement.innerHTML = `Ferme - 0 ms`;
+        statusPlayerContainer.classList.add('red');
+        playersOnline.innerHTML = '0';
     }
 }
 

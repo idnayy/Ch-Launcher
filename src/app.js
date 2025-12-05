@@ -3,12 +3,72 @@
  * Luuxis License v1.0 (voir fichier LICENSE pour les détails en FR/EN)
  */
 
-const { app, ipcMain, nativeTheme } = require('electron');
 const { Microsoft } = require('minecraft-java-core');
-const { autoUpdater } = require('electron-updater')
+const { autoUpdater } = require('electron-updater');
+const { app, BrowserWindow, ipcMain } = require("electron");
+const { spawn } = require("child_process");
+const path = require("path");
+const fs = require("fs");
+const { setPresence } = require("../rpc");
 
-const path = require('path');
-const fs = require('fs');
+let mainWindow;
+let rpcProcess;
+let mcProcess; // proceso de Minecraft
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  });
+
+  // Estado inicial al abrir el launcher
+  mainWindow.on("ready-to-show", () => {
+    setPresence("En el launcher", "Esperando acción");
+  });
+
+  // Lanza rpc.js automáticamente
+  const rpcPath = path.resolve(__dirname, "../rpc.js");
+  rpcProcess = spawn("node", [rpcPath], { stdio: "inherit" });
+
+  rpcProcess.on("error", (err) => {
+    console.error("Error al lanzar rpc.js:", err);
+  });
+
+  rpcProcess.on("exit", (code) => {
+    console.log("rpc.js terminó con código:", code);
+  });
+}
+
+// Escucha mensajes del renderer para actualizar Rich Presence
+ipcMain.on("set-presence", (event, { details, state }) => {
+  setPresence(details, state);
+});
+
+// Escucha cuando el renderer pide lanzar Minecraft
+ipcMain.on("launch-minecraft", () => {
+  console.log("Renderer pidió lanzar Minecraft...");
+  setPresence("Jugando", "ChambaGames");
+
+  if (mainWindow) {
+    mainWindow.minimize();
+    mainWindow.webContents.send("minecraft-started");
+  }
+});
+
+// Al cerrar todas las ventanas
+app.on("window-all-closed", () => {
+  if (rpcProcess) rpcProcess.kill();
+  if (mcProcess) mcProcess.kill();
+
+  // Quitar actividad al cerrar
+  setPresence("", "");
+
+  app.quit();
+});
 
 const UpdateWindow = require("./assets/js/windows/updateWindow.js");
 const MainWindow = require("./assets/js/windows/mainWindow.js");

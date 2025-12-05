@@ -3,67 +3,60 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    background: var(--background); /* fondo sólido */
+    background: url('../../images/background/dark/CHLogo.png') no-repeat center center;
+    background-size: cover; /* hace que la imagen cubra todo el contenedor */
 }
+
 
 /* Social tab */
 .social-tab {
-    position: absolute;
-    display: flex;
-    bottom: 0;
-    right: 0;
-    width: 15%;
-    height: 80%;
-    justify-content: center;
-    margin-bottom: 1rem;
-    pointer-events: none;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  margin: 0;
 }
 
 .social-list {
     border-radius: 10px;
-    height: 100%;
+    height: auto;
 }
 
 .social-block {
     display: flex;
     background: rgba(0, 0, 0, 0.5);
-    width: 90px;
-    height: 90px;
-    margin-bottom: 1rem;
+    width: 70px;           /* 👈 más pequeño que antes (90px) */
+    height: 70px;          /* 👈 más pequeño que antes (90px) */
     border-radius: 12px;
-    font-size: 2rem;
+    font-size: 1.6rem;     /* reducido un poco */
     cursor: pointer;
     align-items: center;
     justify-content: center;
     pointer-events: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    /* ❌ quitamos la transición y transform para eliminar animación */
 }
 
 .social-block:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 12px var(--element-color);
+    /* ❌ sin animación ni escala */
+    box-shadow: 0 0 12px var(--element-color); /* solo un efecto sutil */
 }
 
 .icon-social {
     pointer-events: none;
     background-repeat: no-repeat;
-    height: 55%;
-    width: 55%;
+    height: 50%;           /* ajustado al nuevo tamaño */
+    width: 50%;
     filter: var(--svg-color);
 }
 
 /* Sidebar */
 .sidebar {
-    position: relative;
-    z-index: 5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 90px;
-    background: rgba(0, 0, 0, 0.6);
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    display: none;
 }
 
 .player-options {
@@ -75,23 +68,18 @@
     margin: 0 1.5rem;
 }
 
-.player-head {
-    background: url('../../images/default/setve.png') no-repeat;
-    background-size: cover;
-    image-rendering: pixelated;
-    transition: var(--transition);
-    height: 3rem;
-    width: 3rem;
-    pointer-events: none;
-    border-radius: 15px;
-    box-shadow: 0 0 8px rgba(255,255,255,0.1);
+.play-elements {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-.play-elements {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .play-instance {
     display: flex;
@@ -120,8 +108,8 @@
 }
 
 .play-btn:hover {
-    transform: scale(1.07);
-    box-shadow: 0 0 16px #3c8c3c;
+  transform: scale(1.02);      /* más suave para no “empujar” nada */
+  box-shadow: 0 0 12px #3c8c3c;
 }
 
 .instance-select {
@@ -171,18 +159,21 @@
 }
 
 .settings-btn {
-    width: 3rem;
-    height: 3rem;
-    font-size: 3rem;
-    color: var(--element-color);
-    margin: 0 1.5rem;
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 3rem;
+  height: 3rem;
+  font-size: 3rem;
+  color: var(--element-color);
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  z-index: 999;
 }
 
 .settings-btn:hover {
-    transform: rotate(15deg) scale(1.1);
-    color: #3c8c3c;
+  transform: rotate(15deg) scale(1.1);
+  color: #3c8c3c;
 }
 
 /* Instance popup */
@@ -248,6 +239,61 @@
     transform: scale(1.05);
 }
 
-.active-instance {
-    background: var(--element-color);
+.player-info {
+  position: fixed;
+  top: 20px;      /* 👈 ahora arriba */
+  left: 20px;     /* sigue pegado a la izquierda */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+}
+
+
+/* Contenedor del avatar */
+.player-avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+/* Anillo RGB animado */
+.avatar-ring {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  border-radius: 8px;
+  background: linear-gradient(45deg,
+    red, orange, yellow, green, cyan, blue, violet, red);
+  background-size: 400% 400%;
+  animation: rgbBorder 6s linear infinite;
+  z-index: 0;
+}
+
+/* Imagen del skin (solo cabeza) */
+.player-skin {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  image-rendering: pixelated;
+  background-color: #1e1e1e;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Animación del borde */
+@keyframes rgbBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.player-name {
+  font-size: 14px;
+  color: #eaeaea;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }

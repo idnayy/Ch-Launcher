@@ -6,14 +6,17 @@
     </head>
     <body>
         <div class="dragbar"></div>
+
+        <!-- Botones estilo macOS -->
         <div class="darwin">
             <div class="frame">
                 <div id="close" class="button-frame darwin-icon-close"></div>
                 <div id="minimize" class="button-frame darwin-icon-minimize"></div>
                 <div id="maximize" class="button-frame darwin-icon-maximize"></div>
-
             </div>
         </div>
+
+        <!-- Botones estilo Windows -->
         <div class="other">
             <div class="frame">
                 <div id="minimize" class="button-frame icon-minimize"></div>
@@ -22,6 +25,7 @@
             </div>
         </div>
 
+        <!-- Popup genérico -->
         <div class="popup">
             <div class="popup-tab">
                 <div class="popup-title"></div>
@@ -31,7 +35,14 @@
                 </div>
             </div>
         </div>
+
+        <!-- Contenedor de paneles dinámicos -->
         <div class="panels"></div>
+
+        <!-- Script principal del launcher -->
         <script src="assets/js/launcher.js" type="module"></script>
+
+        <!-- Renderer para comunicación con main y Rich Presence -->
+        <script src="renderer.js"></script>
     </body>
 </html>

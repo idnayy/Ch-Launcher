@@ -9,14 +9,30 @@ const { shell, ipcRenderer } = require('electron')
 
 class Home {
     static id = "home";
-    async init(config) {
-        this.config = config;
-        this.db = new database();
-        this.news()
-        this.socialLick()
-        this.instancesSelect()
-        document.querySelector('.settings-btn').addEventListener('click', e => changePanel('settings'))
-    }
+async init(config) {
+    this.config = config;
+    this.db = new database();
+
+    // 👇 Aquí va tu código para mostrar la skin
+const configClient = await this.db.readData('configClient');
+const auth = await this.db.readData('accounts', configClient.account_selected);
+
+const skinElement = document.querySelector('.player-skin');
+const nameElement = document.querySelector('.player-name');
+
+if (skinElement && auth?.name) {
+  skinElement.src = `https://minotar.net/helm/${auth.name}/48`;
+}
+
+if (nameElement && auth?.name) {
+  nameElement.textContent = auth.name; // 👈 aquí se pone dinámico
+}
+
+    this.news();
+    this.socialLick();
+    this.instancesSelect();
+    document.querySelector('.settings-btn').addEventListener('click', e => changePanel('settings'));
+}
 
     async news() {
         let newsElement = document.querySelector('.news-list');
@@ -330,7 +346,7 @@ let opt = {
             ipcRenderer.send('main-window-progress-reset')
             infoStartingBOX.style.display = "none"
             playInstanceBTN.style.display = "flex"
-            infoStarting.innerHTML = `Vérification`
+            infoStarting.innerHTML = `Verificando`
             new logger(pkg.name, '#7289da');
             console.log(err);
         });

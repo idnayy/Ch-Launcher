@@ -5,6 +5,29 @@ const JavaScriptObfuscator = require('javascript-obfuscator');
 const nodeFetch = require('node-fetch')
 const png2icons = require('png2icons');
 const Jimp = require('jimp');
+const nodeFetch = require("node-fetch");
+const { spawn } = require("child_process");
+
+// Ejemplo de uso dinámico:
+// Al iniciar el launcher
+const { setPresence } = require("./rpc");
+
+// Al iniciar el launcher
+setPresence("En el launcher");
+
+// Cuando el jugador hace clic en Jugar
+document.querySelector(".play-btn").addEventListener("click", () => {
+  setPresence("Conectando al servidor...");
+});
+
+// Cuando el juego ya está abierto
+setTimeout(() => {
+  setPresence("Jugando Chamba Games");
+}, 5000);
+
+process.on("exit", () => {
+  rpcProcess.kill();
+});
 
 const { preductname } = require('./package.json');
 

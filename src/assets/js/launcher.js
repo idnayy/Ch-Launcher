@@ -19,7 +19,7 @@ const os = require('os');
 class Launcher {
     async init() {
         this.initLog();
-        console.log('Initializing Launcher...');
+        console.log('Iniciando Launcher...');
         this.shortcut()
         await setBackground()
         this.initFrame();
@@ -61,7 +61,7 @@ class Launcher {
     }
 
     initFrame() {
-        console.log('Initializing Frame...')
+        console.log('Iniciando Frame...')
         const platform = os.platform() === 'darwin' ? "darwin" : "other";
 
         document.querySelector(`.${platform} .frame`).classList.toggle('hide')
@@ -86,7 +86,7 @@ class Launcher {
     }
 
     async initConfigClient() {
-        console.log('Initializing Config Client...')
+        console.log('Iniciando Config Client...')
         let configClient = await this.db.readData('configClient')
 
         if (!configClient) {
@@ -119,7 +119,7 @@ class Launcher {
     createPanels(...panels) {
         let panelsElem = document.querySelector('.panels')
         for (let panel of panels) {
-            console.log(`Initializing ${panel.name} Panel...`);
+            console.log(`Iniciando ${panel.name} Panel...`);
             let div = document.createElement('div');
             div.classList.add('panel', panel.id)
             div.innerHTML = fs.readFileSync(`${__dirname}/panels/${panel.id}.html`, 'utf8');
@@ -144,7 +144,7 @@ class Launcher {
                 if (account.meta.type === 'Xbox') {
                     console.log(`Account Type: ${account.meta.type} | Username: ${account.name}`);
                     popupRefresh.openPopup({
-                        title: 'Connexion',
+                        title: 'Conectando',
                         content: `Refresh account Type: ${account.meta.type} | Username: ${account.name}`,
                         color: 'var(--color)',
                         background: false

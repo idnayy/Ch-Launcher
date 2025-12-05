@@ -161,17 +161,22 @@ class Settings {
         });
     }
 
-    async javaPath() {
-        let javaPathText = document.querySelector(".java-path-txt")
+async javaPath() {
+    let javaPathText = document.querySelector(".java-path-txt");
+    if (javaPathText)
         javaPathText.textContent = `${await appdata()}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}/runtime`;
 
-        let configClient = await this.db.readData('configClient')
-        let javaPath = configClient?.java_config?.java_path || 'Utiliser la version de java livre avec le launcher';
-        let javaPathInputTxt = document.querySelector(".java-path-input-text");
-        let javaPathInputFile = document.querySelector(".java-path-input-file");
-        javaPathInputTxt.value = javaPath;
+    let configClient = await this.db.readData('configClient');
+    let javaPath = configClient?.java_config?.java_path || 'Utilizar la versión de Java que viene con el launcher (recomendado)';
 
-        document.querySelector(".java-path-set").addEventListener("click", async () => {
+    let javaPathInputTxt = document.querySelector(".java-path-input-text");
+    let javaPathInputFile = document.querySelector(".java-path-input-file");
+
+    if (javaPathInputTxt) javaPathInputTxt.value = javaPath;
+
+    const javaPathSetBtn = document.querySelector(".java-path-set");
+    if (javaPathSetBtn && javaPathInputFile) {
+        javaPathSetBtn.addEventListener("click", async () => {
             javaPathInputFile.value = '';
             javaPathInputFile.click();
             await new Promise((resolve) => {
@@ -180,23 +185,9 @@ class Settings {
                     if (javaPathInputFile.value != '') resolve(clearInterval(interval));
                 }, 100);
             });
-
-            if (javaPathInputFile.value.replace(".exe", '').endsWith("java") || javaPathInputFile.value.replace(".exe", '').endsWith("javaw")) {
-                let configClient = await this.db.readData('configClient')
-                let file = javaPathInputFile.files[0].path;
-                javaPathInputTxt.value = file;
-                configClient.java_config.java_path = file
-                await this.db.updateData('configClient', configClient);
-            } else alert("Le nom du fichier doit être java ou javaw");
-        });
-
-        document.querySelector(".java-path-reset").addEventListener("click", async () => {
-            let configClient = await this.db.readData('configClient')
-            javaPathInputTxt.value = 'Utiliser la version de java livre avec le launcher';
-            configClient.java_config.java_path = null
-            await this.db.updateData('configClient', configClient);
         });
     }
+}
 
     async resolution() {
         let configClient = await this.db.readData('configClient')
@@ -230,37 +221,43 @@ class Settings {
         })
     }
 
-    async launcher() {
-        let configClient = await this.db.readData('configClient');
+async launcher() {
+    let configClient = await this.db.readData('configClient');
 
-        let maxDownloadFiles = configClient?.launcher_config?.download_multi || 5;
-        let maxDownloadFilesInput = document.querySelector(".max-files");
-        let maxDownloadFilesReset = document.querySelector(".max-files-reset");
+    let maxDownloadFiles = configClient?.launcher_config?.download_multi || 5;
+    let maxDownloadFilesInput = document.querySelector(".max-files");
+    let maxDownloadFilesReset = document.querySelector(".max-files-reset");
+
+    if (maxDownloadFilesInput) {
         maxDownloadFilesInput.value = maxDownloadFiles;
 
         maxDownloadFilesInput.addEventListener("change", async () => {
-            let configClient = await this.db.readData('configClient')
+            let configClient = await this.db.readData('configClient');
             configClient.launcher_config.download_multi = maxDownloadFilesInput.value;
             await this.db.updateData('configClient', configClient);
-        })
+        });
+    }
 
+    if (maxDownloadFilesReset && maxDownloadFilesInput) {
         maxDownloadFilesReset.addEventListener("click", async () => {
-            let configClient = await this.db.readData('configClient')
-            maxDownloadFilesInput.value = 5
+            let configClient = await this.db.readData('configClient');
+            maxDownloadFilesInput.value = 5;
             configClient.launcher_config.download_multi = 5;
             await this.db.updateData('configClient', configClient);
-        })
+        });
+    }
 
-        let themeBox = document.querySelector(".theme-box");
-        let theme = configClient?.launcher_config?.theme || "auto";
+    let themeBox = document.querySelector(".theme-box");
+    let theme = configClient?.launcher_config?.theme || "auto";
 
-        if (theme == "auto") {
-            document.querySelector('.theme-btn-auto').classList.add('active-theme');
-        } else if (theme == "dark") {
-            document.querySelector('.theme-btn-sombre').classList.add('active-theme');
-        } else if (theme == "light") {
-            document.querySelector('.theme-btn-clair').classList.add('active-theme');
-        }
+    if (theme == "auto") {
+        document.querySelector('.theme-btn-auto')?.classList.add('active-theme');
+    } else if (theme == "dark") {
+        document.querySelector('.theme-btn-sombre')?.classList.add('active-theme');
+    } else if (theme == "light") {
+        document.querySelector('.theme-btn-clair')?.classList.add('active-theme');
+    }
+
 
         themeBox.addEventListener("click", async e => {
             if (e.target.classList.contains('theme-btn')) {
