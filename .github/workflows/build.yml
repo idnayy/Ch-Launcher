@@ -57,7 +57,7 @@ jobs:
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build
+        run: npm run dist
         shell: bash
 
       # 👇 Paso extra: verificar qué se generó en dist/
