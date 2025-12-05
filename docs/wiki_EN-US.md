@@ -1,4 +1,4 @@
-# Launcher User Guidne
+# Launcher User Guidnes
 
 ## 1. installation
 
