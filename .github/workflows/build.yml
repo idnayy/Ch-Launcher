@@ -53,6 +53,27 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.github_token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
         shell: bash
+
+      # 👇 Paso extra: verificar qué se generó en dist/
+      - name: List dist contents
+        if: matrix.os == 'windows-latest'
+        run: dir dist
+        shell: cmd
+
+      # 👇 Subir todos los artefactos al release
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/*.exe
+            dist/*.AppImage
+            dist/*.dmg
+            dist/*.zip
+            dist/*.yml
+            dist/win-unpacked/*.exe
+          tag_name: ${{ env.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
