@@ -14,7 +14,7 @@
     "start": "cross-env-shell NODE_ENV=dev electron .",
     "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
     "build": "node build.js --obf=true --build=platform",
-    "dist": "electron-builder --win nsis --linux AppImage"
+    "dist": "electron-builder --win nsis"
   },
   "license": "CCANC",
   "nodemonConfig": {
@@ -55,12 +55,6 @@
     },
     "win": {
       "target": "nsis"
-    },
-    "linux": {
-      "target": "AppImage"
-    },
-    "mac": {
-      "target": "dmg"
     }
   }
 }

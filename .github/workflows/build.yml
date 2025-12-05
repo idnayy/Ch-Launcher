@@ -15,7 +15,9 @@ jobs:
 
       - name: Get version
         id: get_version
-        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV && echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+        run: |
+          echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV
+          echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
       
       - name: Create Release
         id: create-release
@@ -30,11 +32,7 @@ jobs:
 
   build-launcher:
     needs: create-release
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-14, ubuntu-latest, windows-latest]
+    runs-on: windows-latest   # 👈 solo Windows
 
     steps:
       - name: Check out Git repository
@@ -45,37 +43,27 @@ jobs:
         with:
           node-version: 18
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
       - name: Install Dependencies
         run: npm ci
         shell: bash
 
-      - name: Build
+      - name: Build (Windows .exe)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist
         shell: bash
 
-      # 👇 Paso extra: verificar qué se generó en dist/
+      # 👇 Verificar qué se generó en dist/
       - name: List dist contents
-        if: matrix.os == 'windows-latest'
         run: dir dist
         shell: cmd
 
-      # 👇 Subir todos los artefactos al release
+      # 👇 Subir el .exe al release
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
         with:
           files: |
             dist/*.exe
-            dist/*.AppImage
-            dist/*.dmg
-            dist/*.zip
-            dist/*.yml
             dist/win-unpacked/*.exe
           tag_name: v${{ needs.create-release.outputs.version }}
         env:
