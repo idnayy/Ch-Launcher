@@ -18,6 +18,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const exists = !!document.querySelector(".play-btn");
   console.log(`[renderer] DOMContentLoaded. play-btn presente: ${exists}`);
+
+  // Cuando el jugador hace clic en Jugar
+  const playBtn = document.querySelector(".play-btn");
+  if (playBtn) {
+    playBtn.addEventListener("click", () => {
+      console.log("[renderer] Click en .play-btn detectado (DOMContentLoaded)");
+
+      // 🔹 Cambia a Conectando
+      updatePresence("Conectando al servidor...", "Preparando sesión");
+
+      // 🔹 Avisamos al proceso principal que debe lanzar Minecraft
+      ipcRenderer.send("launch-minecraft");
+    });
+  }
 });
 
 // Delegación de eventos: captura clic en .play-btn aunque se renderice luego
@@ -25,7 +39,7 @@ document.addEventListener("click", (e) => {
   const playBtn = e.target.closest(".play-btn");
   if (!playBtn) return;
 
-  console.log("[renderer] Click en .play-btn detectado");
+  console.log("[renderer] Click en .play-btn detectado (delegación)");
 
   // 🔹 Cambia a Jugando
   updatePresence("Jugando", "ChambaGames");

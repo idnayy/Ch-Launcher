@@ -14,11 +14,6 @@ const { setPresence } = require("./rpc");
 // Al iniciar el launcher
 setPresence("En el launcher");
 
-// Cuando el jugador hace clic en Jugar
-document.querySelector(".play-btn").addEventListener("click", () => {
-  setPresence("Conectando al servidor...");
-});
-
 // Cuando el juego ya está abierto
 setTimeout(() => {
   setPresence("Jugando Chamba Games");
