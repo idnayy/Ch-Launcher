@@ -1,5 +1,5 @@
+# module du helios launcher
 name: Launcher Build
-
 on:
   push:
     branches: [ master ]
@@ -7,48 +7,35 @@ on:
 jobs:
   create-release:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get_version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Get version
-        id: get_version
-        run: |
-          echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
-
-      - name: Create Git tag
-        run: |
-          git fetch --tags
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git tag v${{ steps.get_version.outputs.version }}
-          git push origin v${{ steps.get_version.outputs.version }}
-
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV
+      
       - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ steps.get_version.outputs.version }}
-          name: release v${{ steps.get_version.outputs.version }}
-          draft: false
-          prerelease: false
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.version }}
+          release_name: release ${{ env.version }}
+          draft: false
+          prerelease: ${{ contains(env.version, 'beta') || contains(env.version, 'alpha') }}
 
   build-launcher:
     needs: create-release
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [macos-14, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
-
-      - name: Fetch tags
-        run: git fetch --tags
 
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -61,19 +48,11 @@ jobs:
           python-version: 3.x
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
         shell: bash
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.github_token }}
         run: npm run build
         shell: bash
-
-      - name: Upload Release Assets
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/**/* 
-          tag_name: v${{ needs.create-release.outputs.version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
