@@ -53,7 +53,7 @@
     "extraFiles": [
       {
         "from": "node_modules/electron/dist/ffmpeg.dll",
-        "to": "ffmpeg.dll"
+        "to": "win-unpacked/ffmpeg.dll"
       }
     ],
     "directories": {
