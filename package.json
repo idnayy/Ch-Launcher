@@ -50,6 +50,12 @@
       "src/**/*",
       "node_modules/**/*"
     ],
+    "extraFiles": [
+      {
+        "from": "node_modules/electron/dist/ffmpeg.dll",
+        "to": "ffmpeg.dll"
+      }
+    ],
     "directories": {
       "buildResources": "src/assets/images"
     },
