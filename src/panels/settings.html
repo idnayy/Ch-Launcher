@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="nav-settings">
+        <p>Configuraciones</p>
+        <div class="nav-box">
+            <div id="account" class="nav-settings-btn active-settings-BTN">CUENTAS</div>
+            <div id="java" class="nav-settings-btn">RAM</div>
+            <div id="resolution" class="nav-settings-btn">RESOLUCIÓN</div>
+            <div id="launcher" class="nav-settings-btn">LAUNCHER</div>
+            <div id="save" class="nav-settings-btn">SALIR</div>
+        </div>
+    </div>
+
+    <div id="account-tab" class="container-settings active-container-settings">
+        <div class="titre-tab">Cuentas de jugadores</div>
+
+        <div class="accounts-list content-scroll">
+            <div class="account" id="add">
+                <div class="add-profile">
+                    <div class="icon-account-add"></div>
+                </div>
+                <div class="add-text-profile">Agregar una cuenta</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="java-tab" class="container-settings content-scroll">
+        <div class="titre-tab">RAM</div>
+        <div class="settings-elements-box">
+            <div class="setting-text">
+                <b>-RAM Máxima:</b> (2GB A 3GB Recomendado)<br>
+                <b>-RAM Mínima:</b> (1GB A 2GB Recomendado)
+            </div>
+            <div class="settings-elements content-evenly">
+                <div class="memory-slider" min="0.5" max="8" step="0.5">
+                    <div class="slider-touch-left">
+                        <span value="0 GB"></span>
+                    </div>
+                    <div class="slider-touch-right">
+                        <span value="0 GB"></span>
+                    </div>
+                    <div class="slider-line">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="ram-info-block">
+                    <b>RAM Total: <span id="total-ram">0 GB</span></b><br>
+                    <b>RAM Disponible: <span id="free-ram">0 GB</span></b>
+                </div>
+            </div>
+        </div>
+
+        <div class="titre-tab">Ubicación de Java</div>
+        <div class="settings-elements-box">
+            <div class="setting-text">
+            </div>
+            <div class="settings-elements content-evenly">
+                <input type="text" class="java-path-input-text" disabled>
+                <input type="file" class="java-path-input-file" accept="application/octet-stream" />
+                <div class="java-path-box">
+                    <div class="java-path-set java-path-btn">Cambiar</div>
+                    <div class="java-path-reset java-path-btn">Por defecto</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="resolution-tab" class="container-settings">
+        <div class="titre-tab">Resolución</div>
+        <div class="settings-elements-box">
+            <div class="setting-text">
+                Define una resolución personalizada para que el juego se adapte a tu pantalla.<br>
+                Por defecto el juego inicia en 854 x 480,<br>puedes modificar este valor para un confort de juego
+                óptimo. La resolución ideal es 1280 x 720.
+            </div>
+            <div class="settings-elements content-center">
+                <div class="input-size-element">
+                    <input type="number" class="width-size input-resolution">
+                    <div class="size-cross"></div>
+                    <input type="number" class="height-size input-resolution">
+                </div>
+                <div class="size-reset size-btn">Por defecto</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="launcher-tab" class="container-settings content-scroll">
+        <div class="titre-tab">Información del Launcher</div>
+        <div class="titre-tab">Tema</div>
+        <div class="settings-elements-box">
+            <div class="setting-text">
+                Este es el launcher oficial de CH.<br> 
+                    Creditos: idnay y Luuxis.
+            </div>
+            <div class="settings-elements content-center theme-box">
+                <div class="theme-btn theme-btn-sombre">Oscuro</div>
+            </div>
+        </div>
+
+        <div class="titre-tab">Comportamiento del launcher al inicio</div>
+        <div class="settings-elements-box">
+            <div class="setting-text">
+                Puedes elegir si el launcher se cierra automáticamente o permanece abierto cuando inicias el juego.
+            </div>
+
+            <div class="settings-elements content-evenly close-box">
+                <div class="close-launcher close-btn">Cerrar el launcher después de iniciar el juego (recomendado)</div>
+                <div class="close-none close-btn">Mantener el launcher abierto</div>
+                <div class="close-all close-btn">Cerrar el juego si el launcher se cierra</div>
+            </div>
+        </div>
+
+        <!-- <div class="titre-tab">Entorno INTEL</div>
+        <div class="settings-elements-box">
+            <div class="setting-text">
+                para los que juegan con procesadores Apple Silicon
+            </div>
+
+            <div class="settings-elements content-evenly close-box">
+                <div class="close-launcher close-btn">Entorno INTEL</div>
+                <div class="close-none close-btn">Entorno SILICON</div>
+            </div>
+        </div> -->
+    </div>
+</div>

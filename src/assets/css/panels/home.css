@@ -1,0 +1,299 @@
+.home .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background: url('../../images/background/dark/CHLogo.png') no-repeat center center;
+    background-size: cover; /* hace que la imagen cubra todo el contenedor */
+}
+
+
+/* Social tab */
+.social-tab {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+.social-list {
+    border-radius: 10px;
+    height: auto;
+}
+
+.social-block {
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
+    width: 70px;           /* 👈 más pequeño que antes (90px) */
+    height: 70px;          /* 👈 más pequeño que antes (90px) */
+    border-radius: 12px;
+    font-size: 1.6rem;     /* reducido un poco */
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    /* ❌ quitamos la transición y transform para eliminar animación */
+}
+
+.social-block:hover {
+    /* ❌ sin animación ni escala */
+    box-shadow: 0 0 12px var(--element-color); /* solo un efecto sutil */
+}
+
+.icon-social {
+    pointer-events: none;
+    background-repeat: no-repeat;
+    height: 50%;           /* ajustado al nuevo tamaño */
+    width: 50%;
+    filter: var(--svg-color);
+}
+
+/* Sidebar */
+.sidebar {
+    display: none;
+}
+
+.player-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    height: 3rem;
+    margin: 0 1.5rem;
+}
+
+.play-elements {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+
+
+.play-instance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border: 3px solid var(--element-color);
+    border-radius: 15px;
+    height: 3.2rem;
+    padding-right: 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.play-btn {
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #3c8c3c, #2e6e2e);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0.6rem 2.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.play-btn:hover {
+  transform: scale(1.02);      /* más suave para no “empujar” nada */
+  box-shadow: 0 0 12px #3c8c3c;
+}
+
+.instance-select {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: -3px;
+    top: -2px;
+    color: var(--element-color);
+    font-size: 1rem;
+    height: calc(100% - 1px);
+    border: 3px solid var(--element-color);
+    text-align: center;
+    border-radius: 15px;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.instance-select:hover {
+    background: var(--element-color);
+    color: #000;
+    transform: scale(1.05);
+}
+
+.info-starting-game {
+    display: none;
+    text-align: center;
+}
+
+.progress-bar {
+    appearance: none;
+    height: 10px;
+    margin: 0.5rem 0;
+}
+
+.progress-bar::-webkit-progress-bar {
+    background-color: var(--background);
+    border: 1px solid var(--element-color);
+    border-radius: 10px;
+}
+
+.progress-bar::-webkit-progress-value {
+    background-color: var(--element-color);
+    border-radius: 10px;
+}
+
+.settings-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 3rem;
+  height: 3rem;
+  font-size: 3rem;
+  color: var(--element-color);
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  z-index: 999;
+}
+
+.settings-btn:hover {
+  transform: rotate(15deg) scale(1.1);
+  color: #3c8c3c;
+}
+
+/* Instance popup */
+.instance-popup {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.instances-tab {
+    position: relative;
+    background: var(--background);
+    border-radius: 12px;
+    padding: 1.5rem 3rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.close-popup {
+    position: absolute;
+    display: flex;
+    top: 10px;
+    right: 10px;
+    background: var(--shadow);
+    height: 30px;
+    width: 30px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.close-popup:hover {
+    background: var(--element-color);
+}
+
+.instances-tab p {
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    color: var(--color);
+}
+
+.instance-elements {
+    background: var(--background-element);
+    text-align: center;
+    border-radius: 12px;
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+.instance-elements:hover {
+    background: var(--element-color);
+    transform: scale(1.05);
+}
+
+.player-info {
+  position: fixed;
+  top: 20px;      /* 👈 ahora arriba */
+  left: 20px;     /* sigue pegado a la izquierda */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+}
+
+
+/* Contenedor del avatar */
+.player-avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+/* Anillo RGB animado */
+.avatar-ring {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  border-radius: 8px;
+  background: linear-gradient(45deg,
+    red, orange, yellow, green, cyan, blue, violet, red);
+  background-size: 400% 400%;
+  animation: rgbBorder 6s linear infinite;
+  z-index: 0;
+}
+
+/* Imagen del skin (solo cabeza) */
+.player-skin {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  image-rendering: pixelated;
+  background-color: #1e1e1e;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Animación del borde */
+@keyframes rgbBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.player-name {
+  font-size: 14px;
+  color: #eaeaea;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}

@@ -1,0 +1,68 @@
+{
+  "name": "ch-launcher",
+  "productName": "CH Launcher",
+  "version": "1.0.1",
+  "description": "Launcher oficial de HC",
+  "main": "src/app.js",
+  "author": {
+    "name": "idnay.",
+    "email": "yahandel12@gmail.com",
+    "url": "https://github.com/idnayy"
+  },
+  "url": "http://104.250.132.27",
+  "scripts": {
+    "start": "cross-env-shell NODE_ENV=dev electron .",
+    "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
+    "build": "node build.js --obf=true --build=platform",
+    "dist": "electron-builder --win nsis"
+  },
+  "license": "CCANC",
+  "nodemonConfig": {
+    "ext": "js,html,css",
+    "ignore": "**/test"
+  },
+  "dependencies": {
+    "discord-rpc": "^4.0.1",
+    "electron-updater": "^6.1.8",
+    "minecraft-java-core": "^4.1.4",
+    "node-bdd": "^2.0.4",
+    "node-fetch": "^2.6.7",
+    "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^30.5.1",
+    "electron-builder": "^26.0.12",
+    "javascript-obfuscator": "^4.1.0",
+    "jimp": "^0.22.12",
+    "nodemon": "^3.1.2",
+    "png2icons": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idnayy/Ch-Launcher.git"
+  },
+  "build": {
+    "appId": "com.ch.launcher",
+    "productName": "CH Launcher",
+    "icon": "src/assets/images/icon.ico",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/electron/dist/ffmpeg.dll",
+        "to": "."
+      }
+    ],
+    "directories": {
+      "buildResources": "src/assets/images"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "asar": false
+  }
+}
