@@ -2,7 +2,7 @@
   "name": "ch-launcher",
   "productName": "CH Launcher",
   "version": "1.0.1",
-  "description": "Launcher oficial de HC",
+  "description": "Launcher oficial de CH",
   "main": "src/app.js",
   "author": {
     "name": "idnay.",
