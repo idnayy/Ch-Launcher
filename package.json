@@ -55,6 +55,10 @@
       {
         "from": "node_modules/electron/dist/ffmpeg.dll",
         "to": "."
+      },
+      {
+        "from": "node_modules/electron/dist/icudtl.dat",
+        "to": "."
       }
     ],
     "directories": {
