@@ -9,7 +9,7 @@
     "email": "yahandel12@gmail.com",
     "url": "https://github.com/idnayy"
   },
-  "url": "http://104.250.132.27",
+  "url": "http://luuxcraft.fr/api/user/70663766-37b6-47be-ad9c-d75ec92f606d",
   "scripts": {
     "start": "cross-env-shell NODE_ENV=dev electron .",
     "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
